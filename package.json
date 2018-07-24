@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/coolbree2e/liri-node-app#readme",
   "dependencies": {
-    "npm": "^6.2.0"
+    "npm": "^6.2.0",
+    "request": "^2.87.0"
   }
 }
