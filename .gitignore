@@ -59,3 +59,6 @@ typings/
 
 # next.js build output
 .next
+# hide som stuff
+.DS_store
+node_modules
