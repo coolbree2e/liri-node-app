@@ -39,10 +39,21 @@ if (process.argv[2] == "my-tweets") {
 // * Actors in the movie.
 
 function getMovie() {
-    let nodeArgs = process.argv;
-    // let movInput = process.argv[3];
+    // let movInput = process.argv[3]
     let movInput = "";
-    request("http://www.omdbapi.com/?t=" + movInput + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
+    let nodeArgs = process.argv;
+    for (var i = 3; i < nodeArgs.length; i++) {
+        if (i > 3 && i < nodeArgs.length) {
+            movInput = movInput + "+" + nodeArgs[i];
+        } else {
+            movInput += nodeArgs[i];
+        }
+    }
+    var queryURL = "http://www.omdbapi.com/?t=" + movInput + "&y=&plot=short&apikey=trilogy";
+    
+    console.log(queryURL);
+    
+    request(queryURL,function (error, response, body) {
         if (!error && response.statusCode === 200) {}
         console.log("The movie's rating is: " + JSON.parse(body).imdbRating);
         console.log("");
@@ -52,7 +63,7 @@ function getMovie() {
         console.log("");
         console.log("The release date was : " + JSON.parse(body).Released);
         console.log("");
-        // console.log("Rotten Tomatos rating: "+ JSON.parse(body).Ratings[1].Value);
+        console.log("Rotten Tomatos rating: "+ JSON.parse(body).Ratings[1].Value);
         console.log("");
         console.log("The countries it was made in : " + JSON.parse(body).Country);
         console.log("");
@@ -60,13 +71,7 @@ function getMovie() {
         console.log("");
         console.log("The plot of the movie is : " + JSON.parse(body).Plot);
         // console.log(body);
-        for (var i = 2; i < nodeArgs.length; i++) {
-            if (i > 2 && i < nodeArgs.length) {
-                movInput = movInput + "+" + nodeArgs[i];
-            } else {
-                movInput += nodeArgs[i];
-            }
-        }
+        
         console.log(movInput);
         if (movInput === "") {
             movInput === "Rambo";
