@@ -82,28 +82,40 @@ if (process.argv[2] == "movie-this") {
     getMovie();
 }
 // does the spotify thing
+// Artist(s)
+// The song's name
+// A preview link of the song from Spotify
+// The album that the song is from
 function getSpotify() {
     let tunes = new Spotify(keys.spotify);
+    // lets the input be more than one word
+    let tuneInput = "";
+    let nodeArgs = process.argv;
+    for (var i = 3; i < nodeArgs.length; i++) {
+        if (i > 3 && i < nodeArgs.length) {
+            tuneInput = tuneInput + "+" + nodeArgs[i];
+        } else {
+            tuneInput += nodeArgs[i];
+        } 
+    }
+    // pulls from the API
     tunes.search({
         type: 'track',
-        query: 'walk',
+        query: tuneInput,
         limit: 1
     }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
-        console.log(data.tracks.items)
-        //    for (let key in data.tracks.items){
-
-        //        console.log("====================" + data.tracks.items[key].album);
-        //    }
-        //   console.log(JSON.stringify(data)); 
+        console.log("Here's a link  " +data.tracks.items[0].artists[0].external_urls.spotify);
+        console.log("")
+        console.log("This is the name of the Artist(s)  " + data.tracks.items[0].artists[0].name);
+        console.log("")
+        console.log("This is the name of the song  " + data.tracks.items[0].name);
+        console.log("")
+        console.log("This is the Album that the song is on  " + data.tracks.items[0].album.name);
     });
-    // search: function ({
-    //     type: 'artist OR album OR track',
-    //     query: 'My search query',
-    //     limit: 5
-    // }, callback);
+   
 }
 if (process.argv[2] == "spotify-this-song") {
     getSpotify()
